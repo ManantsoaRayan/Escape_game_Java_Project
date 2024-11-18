@@ -5,7 +5,7 @@ import Items.Montre;
 
 public class Room1 extends abstract_room {
     public Room1() {
-        super("Room 1", "/Resource/Image/back_menu.jpg");
+        super("Room 1", "/res/images/back_menu.jpg");
     }
 
     @Override
