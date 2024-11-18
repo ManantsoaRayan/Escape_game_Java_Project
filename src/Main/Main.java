@@ -15,7 +15,7 @@ public class Main extends JFrame {
 
         try {
             // Chargement de l'image d'arrière-plan
-            image_back = new Background("/res/images/main.jpeg");
+            image_back = new Background("/images/main.jpeg");
             image_back.setLayout(new BorderLayout());
             setContentPane(image_back);
 
