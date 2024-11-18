@@ -1,4 +1,4 @@
-package Items;
+package game.Items;
 
 public class Montre extends abstract_object{
     public Montre(){

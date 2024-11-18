@@ -1,4 +1,4 @@
-package Items;
+package game.Items;
 
 import javax.swing.*;
 

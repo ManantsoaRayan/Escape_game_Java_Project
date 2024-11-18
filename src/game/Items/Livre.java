@@ -1,4 +1,4 @@
-package Items;
+package game.Items;
 
 public class Livre extends abstract_object{
     public Livre(){

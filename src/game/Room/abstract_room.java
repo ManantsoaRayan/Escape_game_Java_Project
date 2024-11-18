@@ -1,4 +1,4 @@
-package Room;
+package game.Room;
 
 import javax.swing.*;
 

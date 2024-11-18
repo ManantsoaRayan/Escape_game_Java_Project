@@ -1,4 +1,4 @@
-package Items;
+package game.Items;
 
 public class Triangle extends abstract_object {
     public Triangle(){

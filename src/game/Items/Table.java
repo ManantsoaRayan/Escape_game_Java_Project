@@ -1,4 +1,4 @@
-package Items;
+package game.Items;
 
 public class Table extends abstract_object {
     public Table(){

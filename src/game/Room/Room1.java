@@ -1,11 +1,11 @@
-package Room;
+package game.Room;
 
-import Items.*;
-import Items.Montre;
+import game.Items.*;
+import game.Items.Montre;
 
 public class Room1 extends abstract_room {
     public Room1() {
-        super("Room 1", "/images/back_menu.jpg");
+        super("game.Room 1", "/images/back_menu.jpg");
     }
 
     @Override

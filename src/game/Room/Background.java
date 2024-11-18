@@ -1,12 +1,13 @@
-package Room;
+package game.Room;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class Background extends JPanel {
     private Image image;
     public Background(String image_path){
-        image = new ImageIcon(getClass().getResource(image_path)).getImage();
+        image = new ImageIcon(Objects.requireNonNull(getClass().getResource(image_path))).getImage();
         if (image == null){
             System.out.println("chemin incorrect");
         }

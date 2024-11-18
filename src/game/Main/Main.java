@@ -1,16 +1,16 @@
-package Main;
+package game.Main;
 
 import javax.swing.*;
 import java.awt.*;
-import Room.Background;
-import Room.Room1;
+import game.Room.Background;
+import game.Room.Room1;
 public class Main extends JFrame {
     protected JPanel image_back;
 
     public Main() {
         // Configuration de base de la fenêtre
         setTitle("Escape Game");
-        setSize(1024, 700);
+        setSize(1024, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         try {

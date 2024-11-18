@@ -1,4 +1,4 @@
-package Items;
+package game.Items;
 
 public class Rond extends abstract_object{
     public Rond(){

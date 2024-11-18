@@ -1,4 +1,4 @@
-package Items;
+package game.Items;
 
 public class Door extends abstract_object {
     public Door() {
