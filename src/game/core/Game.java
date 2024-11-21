@@ -1,6 +1,7 @@
 package game.core;
 
 import game.core.card.Card;
+import game.room.Room;
 
 import javax.swing.JFrame;
 

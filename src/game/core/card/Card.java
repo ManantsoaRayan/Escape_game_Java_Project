@@ -1,6 +1,6 @@
 package game.core.card;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 public class Card extends java.awt.CardLayout{
   
@@ -10,12 +10,12 @@ public class Card extends java.awt.CardLayout{
     this.cardPanel = new JPanel(this);
   }
   
-  public void add(JPanel panel, String id) {
-    this.cardPanel.add(panel, id);
+  public void add(JPanel panel, String identifier) {
+    this.cardPanel.add(panel, identifier);
   }
   
-  public void showComponent(String id) {
-    this.show(this.cardPanel, id);
+  public void showComponent(String identifier) {
+    this.show(this.cardPanel, identifier);
   }
   
   public JPanel getCardPanel() {

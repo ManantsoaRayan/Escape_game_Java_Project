@@ -4,6 +4,8 @@ import game.room.*;
 
 public abstract class Router {
   
+  public static Room currentRoom;
+  
   public static void initializeRoutes() {
     Game.card.add(new GamePanel(), "GamePanel");
     Game.card.add(new Room1(), "room1");
@@ -13,4 +15,5 @@ public abstract class Router {
   public static void route(String panelId) {
     Game.card.showComponent(panelId);
   }
+  
 }

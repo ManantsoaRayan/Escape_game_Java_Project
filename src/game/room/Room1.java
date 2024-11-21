@@ -2,10 +2,7 @@ package game.room;
 
 import game.items.Item;
 import game.items.components.*;
-import game.ui.Button;
 
-import java.awt.*;
-import java.awt.event.ItemListener;
 
 public class Room1 extends Room{
   
@@ -17,24 +14,36 @@ public class Room1 extends Room{
   protected void setup() {
     Table table = new Table("table.png", "");
     CircleFrame circleFrame = new CircleFrame("13.png", "Circle with 13 inside");
-    Door door = new Door("Door.png", "Door");
+    Door door = new Door("Door.png", "Click the door to enter the password");
     Lamp lamp = new Lamp("lamp.png", "Une lampe");
     InteractiveJoker hint = new InteractiveJoker("indice5.png", "Photo avec un 5 dessus");
     InteractiveJoker clock = new InteractiveJoker("Rectangle 1.png", "Une montre qui est a 18h");
+    Joker picture1 = new Joker("Polygon 1.png", "");
+    Joker picture2 = new Joker("Rectangle 2.png", "");
+    Joker picture3 = new Joker("ellipse.png", "");
+    Joker picture4 = new Joker("4.png", "");
+    Joker picture5 = new Joker("Polygon 2.png", "");
+    InteractiveJoker books = new InteractiveJoker("Books.png", "4 books");
     
     
     
     Item[] itemList = {
-      table, circleFrame, door, lamp, hint, clock
+      picture1, picture2, picture3, picture4, picture5, table, books, circleFrame, door, lamp, hint, clock,
     };
     
     
+    picture3.place(100, 450);
+    picture1.place((100 + 100 ), 450);
+    picture2.place((100 + 100 + 100 ), 450);
+    picture4.place((100 + 100 + 100+  100), 450);
+    picture5.place((100 + 100 + 100 + 100 + 40), 450);
     table.place(0, 400);
     circleFrame.place(300, 300);
     door.place(getWidth() - door.getImageWidth(), getHeight() - door.getImageHeight() - 200);
     lamp.place(getWidth() / 2, 0);
-    hint.place(20, 200);
+    hint.place(20, 100);
     clock.place((getWidth() / 2) + 100, 100);
+    books.place(0, 300);
     
     addItems(itemList);
     applyItems();
