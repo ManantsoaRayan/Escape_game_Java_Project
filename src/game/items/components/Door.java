@@ -1,6 +1,8 @@
 package game.items.components;
 
+import game.core.Router;
 import game.items.InteractiveItem;
+import game.room.Room;
 import game.ui.Button;
 
 import javax.swing.*;
@@ -36,6 +38,9 @@ public class Door extends InteractiveItem {
         JFrame ancestor = (JFrame) SwingUtilities.getWindowAncestor(getSelf());
         popupWindow.setLocationRelativeTo(ancestor);
         
+        // get the current room
+        Room currentRoom = (Room) getSelf().getParent();
+        
         int width = ancestor.getWidth() / 2, height = ancestor.getHeight() / 2;
         
         popupWindow.setBounds(width - 100, height - 100, width, height);
@@ -44,9 +49,16 @@ public class Door extends InteractiveItem {
         JPanel contentPanel = new JPanel(null);
         contentPanel.setBackground(Color.DARK_GRAY);
         
+        JLabel attemptsCount = new JLabel("rest of attempts: " + currentRoom.getAttempts());
+        attemptsCount.setFont(new Font("Monospaced", Font.BOLD, 24)); // uniform spacement
+        attemptsCount.setForeground(Color.WHITE);
+        attemptsCount.setHorizontalAlignment(JTextField.CENTER);
+        attemptsCount.setBounds((width - 800) / 2, height / 2 - 100, 800, 40);
+        contentPanel.add(attemptsCount);
+        
         //  passphrase key
         JTextField styledInput = new JTextField(5); // limited at 5 chars
-        styledInput.setFont(new Font("Monospaced", Font.BOLD, 24)); // Espacement uniforme
+        styledInput.setFont(new Font("Monospaced", Font.BOLD, 24)); // uniform
         styledInput.setHorizontalAlignment(JTextField.CENTER);
         styledInput.setBounds((width - 200) / 2, height / 2 - 20, 200, 40);
         styledInput.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
@@ -65,7 +77,6 @@ public class Door extends InteractiveItem {
             }
           }
         });
-        
         contentPanel.add(styledInput);
         
         // cancel button
@@ -86,8 +97,37 @@ public class Door extends InteractiveItem {
         Button open = new Button("Open");
         
         open.listen($ -> {
-          String inputText = styledInput.getText().toUpperCase(); // get the input value
-          JOptionPane.showMessageDialog(popupWindow, "Input: " + inputText);
+          // get the input value
+          String inputText = styledInput.getText().toUpperCase();
+          
+          // check if input is empty or only space
+          if (inputText.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(popupWindow, "must enter something");
+            return;
+          }
+          
+          // check if input text is not equals to input text
+          if (!currentRoom.getPassword().toUpperCase().equals(inputText)) {
+            JOptionPane.showMessageDialog(popupWindow, "Wrong Password");
+            currentRoom.decrementAttempts();
+            
+            // check the attempts left.
+            if (currentRoom.getAttempts() <= 0) {
+              JOptionPane.showMessageDialog(popupWindow, "out of attempts: GAME OVER");
+              Router.route("game over");
+            }
+            
+            // kill the popup window
+            popupWindow.dispose();
+            popupWindow = null;
+            return;
+          }
+          
+          // route to the next room otherwise game over
+          Router.route(
+            (currentRoom.isLast()) ? "game over" : "room2"
+          );
+          
         });
         
         open.setSize(100, 40);

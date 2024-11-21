@@ -6,7 +6,7 @@ public class Room2 extends Room{
   
   
   public Room2(){
-    super(2, "/backgrounds/room1.jpg");
+    super(2,"", "room1.jpg");
   }
   
   @Override

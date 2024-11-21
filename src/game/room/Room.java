@@ -4,8 +4,9 @@ import game.core.Router;
 import game.items.Item;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.Image;
+import java.awt.Graphics;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -13,20 +14,24 @@ import java.util.Objects;
 public abstract class Room extends JPanel {
   protected int number;
   protected int attempts;
+  protected boolean isLast;
+  protected String password;
   protected ArrayList<Item> items;
   protected Image background;
   
-  public Room(int number, String path){
+  public Room(int number, String password, String fileName){
     super();
     this.number = number;
     this.attempts = 3;
+    this.isLast = false;
+    this.password = password;
     this.items = new ArrayList<>();
     setSize(1556, 800);
     setLayout(null);
     
     try {
       this.background = ImageIO.read(
-        Objects.requireNonNull(getClass().getResource(path))
+        Objects.requireNonNull(getClass().getResource("/backgrounds/" + fileName))
       );
     } catch (IOException e) {
       this.background = null;
@@ -37,8 +42,24 @@ public abstract class Room extends JPanel {
   
   protected abstract void setup();
   
-  protected void next(String id) {
-    Router.route(id);
+  public int getAttempts() {
+    return attempts;
+  }
+  
+  public void decrementAttempts() {
+    this.attempts--;
+  }
+  
+  public String getPassword() {
+    return this.password;
+  }
+  
+  public Boolean isLast() {
+    return this.isLast;
+  }
+  
+  protected void next(String identifier) {
+    Router.route(identifier);
   }
   
   protected void addItems(Item item) {
@@ -46,10 +67,11 @@ public abstract class Room extends JPanel {
   }
   
   protected void addItems(Item[] itemList) {
-    for (int i = 0; i < itemList.length; i++) {
-      this.items.add(itemList[i]);
+    for (Item item : itemList) {
+      this.items.add(item);
     }
   }
+  
   
   protected void applyItems() {
     for (Item item: this.items) {
