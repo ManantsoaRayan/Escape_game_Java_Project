@@ -38,6 +38,7 @@ public abstract class Room extends JPanel {
     }
     
     setup();
+    applyItems();
   }
   
   protected abstract void setup();
@@ -58,7 +59,7 @@ public abstract class Room extends JPanel {
     return this.isLast;
   }
   
-  protected void next(String identifier) {
+  public void next(String identifier) {
     Router.route(identifier);
   }
   

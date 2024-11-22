@@ -1,11 +1,16 @@
 package game.items.components;
 
-import game.core.Router;
 import game.items.InteractiveItem;
 import game.room.Room;
 import game.ui.Button;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.JTextField;
+import javax.swing.JOptionPane;
+import javax.swing.BorderFactory;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -14,14 +19,19 @@ import java.awt.event.MouseEvent;
 
 public class Door extends InteractiveItem {
   
+  // Doors popup Window
   private JFrame popupWindow;
   
-  public Door(String imagePath, String description) {
-    super(imagePath, description);
+  public Door(String imagePath) {
+    super(imagePath, "Click the door ");
     
+    // custom adapter with this item
     addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
+        
+        // note: don't forget to make popupWindow null once it is close
+        
         if (popupWindow == null) {
           showPopupWindow();
         }
@@ -29,10 +39,11 @@ public class Door extends InteractiveItem {
       
       private void showPopupWindow() {
 
+        // set the popup window
         popupWindow = new JFrame("DOOR PASSPHRASE");
         
         popupWindow.setAlwaysOnTop(true);
-        popupWindow.setLayout(null);
+        popupWindow.setLayout(null); // avoid using default layout system
         
         // get the parent window
         JFrame ancestor = (JFrame) SwingUtilities.getWindowAncestor(getSelf());
@@ -41,8 +52,10 @@ public class Door extends InteractiveItem {
         // get the current room
         Room currentRoom = (Room) getSelf().getParent();
         
+        // setup width and height
         int width = ancestor.getWidth() / 2, height = ancestor.getHeight() / 2;
         
+        // place the popup in the middle of our game window
         popupWindow.setBounds(width - 100, height - 100, width, height);
         
         // panel that take the elements
@@ -52,7 +65,9 @@ public class Door extends InteractiveItem {
         JLabel attemptsCount = new JLabel("rest of attempts: " + currentRoom.getAttempts());
         attemptsCount.setFont(new Font("Monospaced", Font.BOLD, 24)); // uniform spacement
         attemptsCount.setForeground(Color.WHITE);
-        attemptsCount.setHorizontalAlignment(JTextField.CENTER);
+        
+        // put the text on the center
+        attemptsCount.setHorizontalAlignment(JLabel.CENTER);
         attemptsCount.setBounds((width - 800) / 2, height / 2 - 100, 800, 40);
         contentPanel.add(attemptsCount);
         
@@ -72,7 +87,7 @@ public class Door extends InteractiveItem {
           @Override
           public void keyTyped(KeyEvent e) {
             char c = e.getKeyChar();
-            if (!Character.isLetter(c) || styledInput.getText().length() >= 5) {
+            if (!Character.isLetter(c) || styledInput.getText().length() >= currentRoom.getPassword().length() + 2) {
               e.consume(); // avoid invalid inputs
             }
           }
@@ -82,10 +97,7 @@ public class Door extends InteractiveItem {
         // cancel button
         Button close = new Button("Cancel");
         
-        close.listen($ -> {
-          popupWindow.dispose();
-          popupWindow = null;
-        });
+        close.listen($ -> closePopup());
         
         // styling close button
         close.setSize(100, 40);
@@ -108,25 +120,29 @@ public class Door extends InteractiveItem {
           
           // check if input text is not equals to input text
           if (!currentRoom.getPassword().toUpperCase().equals(inputText)) {
-            JOptionPane.showMessageDialog(popupWindow, "Wrong Password");
+            JOptionPane.showMessageDialog(
+              popupWindow,
+              (inputText.equals("WINDOWS")) ? "THIS WORD IS NOT ALLOWED HERE" : "WRONG PASSWORD"
+              );
             currentRoom.decrementAttempts();
             
             // check the attempts left.
             if (currentRoom.getAttempts() <= 0) {
               JOptionPane.showMessageDialog(popupWindow, "out of attempts: GAME OVER");
-              Router.route("game over");
+              currentRoom.next("game over");
             }
             
             // kill the popup window
-            popupWindow.dispose();
-            popupWindow = null;
+            closePopup();
             return;
           }
           
           // route to the next room otherwise game over
-          Router.route(
+          currentRoom.next(
             (currentRoom.isLast()) ? "game over" : "room2"
           );
+          
+          closePopup();
           
         });
         
@@ -139,8 +155,14 @@ public class Door extends InteractiveItem {
         popupWindow.setVisible(true);
       }
     });
+    
+    
   }
-  
+    private void closePopup() {
+      this.popupWindow.dispose();
+      this.popupWindow = null;
+    }
+  // just a method to use inside a closure to always get  the object
   protected Door getSelf() {
     return this;
   }
