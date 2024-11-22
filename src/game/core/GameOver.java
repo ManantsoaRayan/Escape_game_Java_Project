@@ -10,7 +10,7 @@ import java.awt.*;
 public class GameOver extends Room {
   
   public GameOver() {
-    super(-1,"", "game over.png");
+    super(-1,"", "game over2.png");
   }
   
   @Override

@@ -9,6 +9,7 @@ public abstract class Router {
     Game.card.add(new GamePanel(), "GamePanel");
     Game.card.add(new Room1(), "room1");
     Game.card.add(new Room2(), "room2");
+    Game.card.add(new Room4(), "room4");
     Game.card.add(new GameOver(), "game over");
   }
   

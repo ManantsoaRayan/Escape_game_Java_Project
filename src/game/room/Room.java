@@ -47,6 +47,10 @@ public abstract class Room extends JPanel {
     return attempts;
   }
   
+  public int getNumber() {
+    return number;
+  }
+  
   public void decrementAttempts() {
     this.attempts--;
   }

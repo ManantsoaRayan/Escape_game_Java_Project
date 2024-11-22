@@ -139,8 +139,10 @@ public class Door extends InteractiveItem {
           
           // route to the next room otherwise game over
           currentRoom.next(
-            (currentRoom.isLast()) ? "game over" : "room2"
+            (currentRoom.isLast()) ? "game over" : "room" + (currentRoom.getNumber() + 1)
           );
+          
+          System.out.println(currentRoom.getNumber() + 1);
           
           closePopup();
           
