@@ -27,6 +27,7 @@ public class GameOver extends Room {
     restart.setBackground(Color.WHITE);
     
     label.setFont(new Font("Monospace", Font.BOLD, 70));
+    label.setForeground(Color.WHITE);
     
     // action
     restart.listen($ -> this.next("room1"));
@@ -34,7 +35,7 @@ public class GameOver extends Room {
     // placement
     restart.setBounds(500, getHeight() - 200, 278 ,61);
     quit.setBounds(500 + 300, getHeight() - 200, 278 ,61);
-    label.setBounds(getWidth() / 2 - 300, 175, 800, 63);
+    label.setBounds(getWidth() / 2 - 300, 100, 800, 63);
     
     add(restart);
     add(quit);
