@@ -19,7 +19,7 @@ public class Room2 extends Room{
   @Override
   protected void setup() {
     // initialization
-    Door door = new Door("Door.png");
+    Door door = new Door("door2.jpg");
     JLabel bigHint = new JLabel("The best OS EVER IS");
     
     bigHint.setFont(new Font("Monospaced", Font.BOLD, 30)); // uniform spacement
