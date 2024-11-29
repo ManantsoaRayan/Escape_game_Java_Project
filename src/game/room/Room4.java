@@ -15,7 +15,7 @@ public class Room4 extends Room{
   protected void setup() {
     String newsPaperContent = "<html>I have 2 feet, 6 legs, 8 arms,<br> 2 heads and an eye,<br> who am I?</html>";
     
-    Door door = new Door("door4.png");
+    Door door = new Door("door_4.png");
     Joker dinnyTable = new Joker("dining table.png", "");
     Hint newsPaper = new Hint("newspaper.png", newsPaperContent);
     Joker plant = new Joker("plant.png", "");

@@ -3,6 +3,7 @@ package game.room;
 import game.items.Item;
 import game.items.components.Door;
 import game.items.components.InteractiveJoker;
+import game.items.components.Joker;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,11 +50,12 @@ public class Room3 extends Room{
         text_enigme4.setBounds(getWidth()-600, 110, 600, 50);
         text_enigme5.setBounds(getWidth()-600, 140, 600, 50);
 
-        InteractiveJoker cadre = new InteractiveJoker("cadre1.jpg","4 lettres, symbolysant une lys blache en plein floraisant, lowercase(P...)");
-        cadre.place(60,240);
-
+        InteractiveJoker cadre = new InteractiveJoker("cadre1.png","4 lettres, symbolysant une lys blache en plein floraisant, lowercase(P...)");
+        InteractiveJoker lampe = new InteractiveJoker("lampe.png","Lumière limpide et brillante.");
+        cadre.place(40,240);
+        lampe.place(700,0);
         // sorting items
-        Item[] alignements = {door3,cadre};
+        Item[] alignements = {door3,cadre,lampe};
         // important
         door3.place(250,130);
         add(text_enigme1);
