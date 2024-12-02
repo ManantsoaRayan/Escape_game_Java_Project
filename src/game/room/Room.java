@@ -78,11 +78,11 @@ public abstract class Room extends JPanel implements GameRoom{
 
 
   protected void initializeTimer() {
-    remainingTime = 18;
+    remainingTime = 300;
 
-    timerLabel = new JLabel("1:30", SwingConstants.CENTER);
+    timerLabel = new JLabel("5:00", SwingConstants.CENTER);
     timerLabel.setFont(new Font("Arial", Font.BOLD, 24));
-    timerLabel.setForeground(Color.RED);
+    timerLabel.setForeground(Color.BLUE);
     timerLabel.setBounds(20, 20, 100, 50);
     add(timerLabel);
 

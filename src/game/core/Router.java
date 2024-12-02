@@ -19,9 +19,6 @@ public abstract class Router {
   public static void route(String panelId) {
     // Arrêter le timer de la salle actuelle
     Room currentRoom = getCurrentRoom();
-    if (currentRoom != null && currentRoom.isGameRoom()) {
-      //currentRoom.stopTimer();
-    }
 
     // Afficher la nouvelle salle
     System.out.println("Changement vers : " + panelId);
