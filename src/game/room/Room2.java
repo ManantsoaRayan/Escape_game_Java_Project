@@ -12,7 +12,7 @@ public class Room2 extends Room{
   
   
   public Room2(){
-    super(2,"linux", "room2.jpg");
+    super(2,"linux", "room2.jpg", true);
     this.attempts = 1;
   }
   

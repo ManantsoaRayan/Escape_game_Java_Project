@@ -1,25 +1,38 @@
 package game.room;
 
+import game.core.Game;
 import game.core.Router;
 import game.items.Item;
 
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.Image;
-import java.awt.Graphics;
 import java.io.IOException;
+import java.awt.Graphics;
+import java.awt.Font;
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
-public abstract class Room extends JPanel {
+public abstract class Room extends JPanel implements GameRoom{
+  private static final int DEFAULT_START_TIME = 18;
+
   protected int number;
   protected int attempts;
   protected boolean isLast;
   protected String password;
   protected ArrayList<Item> items;
   protected Image background;
-  
-  public Room(int number, String password, String fileName){
+
+  protected JLabel timerLabel;
+  protected Timer gameTimer;
+  protected int remainingTime;
+  protected boolean isGameRoom; // pour différencier les chambres
+
+  private static boolean gameOverShown = false;
+
+  public Room(int number, String password, String fileName, boolean isGameRoom){
     super();
     this.number = number;
     this.attempts = 3;
@@ -39,6 +52,90 @@ public abstract class Room extends JPanel {
     
     setup();
     applyItems();
+
+    this.isGameRoom = isGameRoom;
+
+    if (isGameRoom) {
+      initializeTimer();
+    }
+
+  }
+
+  public static void resetGameOverFlag() {
+    gameOverShown = false;
+  }
+
+  public void resetTimer() {
+    this.remainingTime = DEFAULT_START_TIME;
+  }
+
+  protected void initializeTimer() {
+    remainingTime = 18;
+
+    timerLabel = new JLabel("1:30", SwingConstants.CENTER);
+    timerLabel.setFont(new Font("Arial", Font.BOLD, 24));
+    timerLabel.setForeground(Color.RED);
+    timerLabel.setBounds(20, 20, 100, 50);
+    add(timerLabel);
+
+    gameTimer = new Timer(1000, e -> updateTimer());
+    gameTimer.start();
+  }
+
+  @Override
+  public void startTimer() {
+    if (isGameRoom) {
+      // Réinitialiser le temps à 1 minute 30
+      remainingTime = 90;
+      updateTimerLabel();
+
+      // Redémarrer le timer s'il est arrêté
+//      if (gameTimer != null && !gameTimer.isRunning()) {
+//        gameTimer.start();
+//      }
+    }
+  }
+
+  private void updateTimer() {
+    remainingTime--;
+    updateTimerLabel();
+    System.out.println("it work");
+
+    if (remainingTime <= 0) {
+      gameTimer.stop();
+      showGameOverPopup();
+    }
+  }
+
+  private void updateTimerLabel() {
+    int minutes = remainingTime / 60;
+    int seconds = remainingTime % 60;
+    timerLabel.setText(String.format("%d:%02d", minutes, seconds));
+  }
+
+  protected void showGameOverPopup() {
+    if (!gameOverShown) {
+      gameOverShown = true;
+      JOptionPane.showMessageDialog(
+              this,
+              "Game Over! Time has run out.",
+              "Time's Up",
+              JOptionPane.INFORMATION_MESSAGE
+      );
+      Router.route("game over");
+    }
+  }
+
+  @Override
+  public void stopTimer() {
+    if (gameTimer != null) {
+      gameTimer.stop();
+    }
+  }
+
+  @Override
+  public boolean isGameRoom() {
+    return isGameRoom;
   }
   
   protected abstract void setup();
@@ -72,9 +169,7 @@ public abstract class Room extends JPanel {
   }
   
   protected void addItems(Item[] itemList) {
-    for (Item item : itemList) {
-      this.items.add(item);
-    }
+      Collections.addAll(this.items, itemList);
   }
   
   
@@ -82,6 +177,10 @@ public abstract class Room extends JPanel {
     for (Item item: this.items) {
       this.add(item);
     }
+  }
+
+  protected Room getSelf() {
+    return this;
   }
   
   

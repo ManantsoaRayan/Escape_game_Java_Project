@@ -7,7 +7,7 @@ import game.items.components.*;
 public class Room1 extends Room{
   
   public Room1(){
-    super(1, "merde", "room1.jpg");
+    super(1, "merde", "room1.jpg", true);
   }
   
   @Override

@@ -10,7 +10,7 @@ import java.awt.Color;
 
 public class GamePanel extends Room {
   public GamePanel(){
-    super(0, "", "main.jpeg");
+    super(0, "", "main.jpeg", false);
     setSize(1556, 800);
     setLayout(null);
     setup();

@@ -7,7 +7,7 @@ import game.items.components.Joker;
 
 public class Room4 extends Room{
   public Room4() {
-    super(4, "liar", "room4.png");
+    super(4, "liar", "room4.png", true);
     this.isLast = true;
   }
   

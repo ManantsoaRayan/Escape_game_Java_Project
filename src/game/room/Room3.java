@@ -10,7 +10,7 @@ import java.awt.*;
 
 public class Room3 extends Room{
     public Room3() {
-        super(3, "pure", "backo_room3.jpg");
+        super(3, "pure", "backo_room3.jpg", true);
     }
 
     @Override
