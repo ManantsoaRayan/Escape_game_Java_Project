@@ -15,31 +15,39 @@ public abstract class Router {
     Game.card.add(new Room4(), "room4");
     Game.card.add(new GameOver(), "game over");
   }
-  
+
   public static void route(String panelId) {
-
-    // Récupérer la chambre courante
-    Component currentComponent = Game.card.getCardPanel().getComponent(0);
-
-    // Arrêter le timer si la chambre courante est une GameRoom
-    if (currentComponent instanceof GameRoom gameRoom) {
-      if (gameRoom.isGameRoom()) {
-        gameRoom.stopTimer();
-      }
+    // Arrêter le timer de la salle actuelle
+    Room currentRoom = getCurrentRoom();
+    if (currentRoom != null && currentRoom.isGameRoom()) {
+      //currentRoom.stopTimer();
     }
 
-    // Afficher la nouvelle chambre
+    // Afficher la nouvelle salle
+    System.out.println("Changement vers : " + panelId);
     Game.card.showComponent(panelId);
 
-    // Récupérer la nouvelle chambre
+    // Vérifie le composant actif après changement
     Component newComponent = Game.card.getCardPanel().getComponent(0);
+    System.out.println("Nouveau composant actif : " + newComponent.getClass().getSimpleName());
 
-    // Démarrer le timer si la nouvelle chambre est une GameRoom
+    // Démarrer le timer si la nouvelle salle est un GameRoom
     if (newComponent instanceof GameRoom gameRoom) {
       if (gameRoom.isGameRoom()) {
         gameRoom.startTimer();
       }
     }
   }
-  
+
+
+  public static Room getCurrentRoom() {
+    for (Component comp : Game.card.getCardPanel().getComponents()) {
+      if (comp.isVisible() && comp instanceof Room room) {
+        return room;
+      }
+    }
+    return null;
+  }
+
+
 }

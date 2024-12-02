@@ -5,6 +5,7 @@ import game.ui.Button;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLOutput;
 
 
 public class GameOver extends Room {
@@ -29,12 +30,23 @@ public class GameOver extends Room {
     label.setFont(new Font("Monospace", Font.BOLD, 70));
     label.setForeground(Color.WHITE);
 
-    // action
     restart.listen($ -> {
       Room.resetGameOverFlag();
       this.next("room1");
+
+      // Ajoute un délai pour garantir que room1 est actif
+      SwingUtilities.invokeLater(() -> {
+        Room nextRoom = Router.getCurrentRoom();
+        if (nextRoom != null) {
+          System.out.println("Salle actuelle après redémarrage : " + nextRoom.getClass().getSimpleName());
+          nextRoom.resetTimer();
+          nextRoom.startTimer();
+        }
+      });
     });
-    
+
+
+
     // placement
     restart.setBounds(500, getHeight() - 200, 278 ,61);
 

@@ -1,6 +1,5 @@
 package game.room;
 
-import game.core.Game;
 import game.core.Router;
 import game.items.Item;
 
@@ -66,8 +65,17 @@ public abstract class Room extends JPanel implements GameRoom{
   }
 
   public void resetTimer() {
-    this.remainingTime = DEFAULT_START_TIME;
+    System.out.println("Réinitialisation du Timer à " + DEFAULT_START_TIME);
+    remainingTime = DEFAULT_START_TIME;
+    updateTimerLabel();
+
+    // Stopper et recréer le Timer
+    if (gameTimer != null) {
+      gameTimer.stop();
+    }
+    gameTimer = new Timer(1000, e -> updateTimer());
   }
+
 
   protected void initializeTimer() {
     remainingTime = 18;
@@ -85,14 +93,15 @@ public abstract class Room extends JPanel implements GameRoom{
   @Override
   public void startTimer() {
     if (isGameRoom) {
-      // Réinitialiser le temps à 1 minute 30
-      remainingTime = 90;
-      updateTimerLabel();
-
-      // Redémarrer le timer s'il est arrêté
-//      if (gameTimer != null && !gameTimer.isRunning()) {
-//        gameTimer.start();
-//      }
+      System.out.println("Démarrage du Timer avec " + remainingTime + " secondes restantes");
+      if (gameTimer != null) {
+        System.out.println("Timer existant, démarrage...");
+        gameTimer.start();
+      } else {
+        System.out.println("Timer inexistant, création nécessaire !");
+      }
+    } else {
+      System.out.println("La salle actuelle n'est pas un GameRoom.");
     }
   }
 
