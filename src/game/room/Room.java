@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.Objects;
 
 public abstract class Room extends JPanel implements GameRoom{
-  private static final int DEFAULT_START_TIME = 18;
+  private static final int DEFAULT_START_TIME = 300;
 
   protected int number;
   protected int attempts;
